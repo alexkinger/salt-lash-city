@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { BookingBanner, FaqList, PageShell } from "@/components/Page";
 import { ContactForm } from "@/components/ContactForm";
+import { ReviewsWidget } from "@/components/ReviewsWidget";
 import { getServiceBySlug, servicePages, site } from "@/data/site";
-import { testimonials } from "@/data/testimonials";
 
 export function Services() {
   return (
@@ -182,22 +182,10 @@ export function Testimonials() {
   return (
     <PageShell
       eyebrow="Love notes"
-      title="Client Testimonials"
-      intro="What guests say about lashes, brows, and the studio vibe at Salt Lash City."
+      title="Client Reviews"
+      intro="Google and Vagaro reviews, synced into the site so guests (and search engines) can read them."
     >
-      <div className="grid gap-5 md:grid-cols-2">
-        {testimonials.map((t) => (
-          <blockquote key={t.name} className="rounded-3xl border border-line bg-cream p-6">
-            <p className="text-sm leading-relaxed text-ink-soft">“{t.quote}”</p>
-            <footer className="mt-5 flex items-center gap-3">
-              {t.image ? (
-                <img src={t.image} alt="" className="h-12 w-12 rounded-full object-cover" />
-              ) : null}
-              <cite className="not-italic font-semibold text-ink">{t.name}</cite>
-            </footer>
-          </blockquote>
-        ))}
-      </div>
+      <ReviewsWidget limit={24} showHeader={false} compact title="Client Reviews" />
       <div className="mt-14">
         <BookingBanner />
       </div>

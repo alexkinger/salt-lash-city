@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import { ReviewsWidget } from "@/components/ReviewsWidget";
 import { site } from "@/data/site";
-import { testimonials } from "@/data/testimonials";
 
 const serviceCards = [
   {
@@ -219,29 +219,7 @@ export function Home() {
       </section>
 
       {/* Reviews */}
-      <section className="bg-cream py-16 md:py-20">
-        <div className="mx-auto max-w-6xl px-5 md:px-8">
-          <h2 className="text-center text-4xl font-bold text-ink">Reviews</h2>
-          <div className="mt-10 grid gap-5 md:grid-cols-2">
-            {testimonials.map((t) => (
-              <blockquote key={t.name} className="border border-line bg-paper p-6">
-                <p className="text-sm leading-relaxed text-ink-soft">“{t.quote}”</p>
-                <footer className="mt-4 flex items-center gap-3">
-                  {t.image ? (
-                    <img src={t.image} alt="" className="h-10 w-10 rounded-full object-cover" />
-                  ) : null}
-                  <cite className="not-italic text-sm font-semibold text-ink">{t.name}</cite>
-                </footer>
-              </blockquote>
-            ))}
-          </div>
-          <div className="mt-8 text-center">
-            <Link to="/testimonials" className="btn-lime-outline">
-              More testimonials
-            </Link>
-          </div>
-        </div>
-      </section>
+      <ReviewsWidget limit={6} title="Reviews" />
 
       {/* CTA */}
       <section className="py-16 md:py-20">

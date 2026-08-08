@@ -1,0 +1,127 @@
+{
+  "updatedAt": "2026-08-08T03:15:00.000Z",
+  "sources": {
+    "google": {
+      "rating": null,
+      "count": null,
+      "url": null,
+      "enabled": false
+    },
+    "vagaro": {
+      "rating": 5,
+      "count": 42,
+      "url": "https://www.vagaro.com/saltlashcity",
+      "enabled": true
+    }
+  },
+  "reviews": [
+    {
+      "id": "vagaro-christine-l-2025-04-13",
+      "source": "vagaro",
+      "author": "Christine L",
+      "rating": 5,
+      "text": "Blake is the Best! She listened to what I wanted (as always) and did exactly what I wanted.",
+      "date": "2025-04-13",
+      "url": "https://www.vagaro.com/saltlashcity/reviews"
+    },
+    {
+      "id": "vagaro-carey-u-2024-06-13",
+      "source": "vagaro",
+      "author": "Carey U",
+      "rating": 5,
+      "text": "Clean. Cute. Cozy. Always a great conversation while getting my beautiful lashes!",
+      "date": "2024-06-13",
+      "url": "https://www.vagaro.com/saltlashcity/reviews"
+    },
+    {
+      "id": "vagaro-florence-g-2024-04-05",
+      "source": "vagaro",
+      "author": "Florence G",
+      "rating": 5,
+      "text": "Easy location and easy access, and plenty of parking. Blake is an absolute sweetheart. My lashes look great after every appointment and I get what I asked for.",
+      "date": "2024-04-05",
+      "url": "https://www.vagaro.com/saltlashcity/reviews"
+    },
+    {
+      "id": "vagaro-carey-u-2024-03-20",
+      "source": "vagaro",
+      "author": "Carey U",
+      "rating": 5,
+      "text": "Every appointment is great! Blake is personable and fun! She will carry on a conversation or let you rest. I love my ME time laying on her cozy table!",
+      "date": "2024-03-20",
+      "url": "https://www.vagaro.com/saltlashcity/reviews"
+    },
+    {
+      "id": "vagaro-carey-u-2023-11-04",
+      "source": "vagaro",
+      "author": "Carey U",
+      "rating": 5,
+      "text": "I absolutely love my lashes! Natural and beautiful!",
+      "date": "2023-11-04",
+      "url": "https://www.vagaro.com/saltlashcity/reviews"
+    },
+    {
+      "id": "vagaro-gemma-c-2023-05-31",
+      "source": "vagaro",
+      "author": "Gemma C",
+      "rating": 5,
+      "text": "Highly recommend Blake! Very professional and quality of her service is commendable! Love the new location too!",
+      "date": "2023-05-31",
+      "url": "https://www.vagaro.com/saltlashcity/reviews"
+    },
+    {
+      "id": "vagaro-suzy-m-2023-01-30",
+      "source": "vagaro",
+      "author": "Suzy M",
+      "rating": 5,
+      "text": "Great service. My lashes and brows look amazing! Clean, professional, relaxing and convenient. Thank you Blake!",
+      "date": "2023-01-30",
+      "url": "https://www.vagaro.com/saltlashcity/reviews"
+    },
+    {
+      "id": "vagaro-carey-u-2023-01-26",
+      "source": "vagaro",
+      "author": "Carey U",
+      "rating": 5,
+      "text": "I couldn’t find a more incredible human to take care of my beauty needs. I will recommend Blake to everyone!",
+      "date": "2023-01-26",
+      "url": "https://www.vagaro.com/saltlashcity/reviews"
+    },
+    {
+      "id": "vagaro-ann-b-2022-09-14",
+      "source": "vagaro",
+      "author": "Ann B",
+      "rating": 5,
+      "text": "Blake gives amazing, relaxing facials in a soothing space.",
+      "date": "2022-09-14",
+      "url": "https://www.vagaro.com/saltlashcity/reviews"
+    },
+    {
+      "id": "vagaro-shelby-l-2021-12-19",
+      "source": "vagaro",
+      "author": "Shelby L",
+      "rating": 5,
+      "text": "100% would recommend this business to all my friends and family and already do! Blake is the best of the best.",
+      "date": "2021-12-19",
+      "url": "https://www.vagaro.com/saltlashcity/reviews"
+    },
+    {
+      "id": "vagaro-robyn-k-2021-09-18",
+      "source": "vagaro",
+      "author": "Robyn K",
+      "rating": 5,
+      "text": "Blake is THE BEST!!! I have so many compliments on my eyelashes! They are amazing!",
+      "date": "2021-09-18",
+      "url": "https://www.vagaro.com/saltlashcity/reviews"
+    },
+    {
+      "id": "vagaro-rachel-g-2021-05-17",
+      "source": "vagaro",
+      "author": "Rachel G",
+      "rating": 5,
+      "text": "Blake is absolutely amazing. She is fantastic at her job and is so kind. I recommend her to all of my friends!",
+      "date": "2021-05-17",
+      "url": "https://www.vagaro.com/saltlashcity/reviews"
+    }
+  ]
+}

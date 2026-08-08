@@ -61,9 +61,28 @@ src/data/               Services + FAQs (easy to edit before CMS)
 supabase/migrations/    Database schema
 ```
 
+## Reviews (Google + Vagaro)
+
+Combined review feed lives in `public/data/reviews.json` and renders through `ReviewsWidget` (semantic HTML + JSON-LD).
+
+```bash
+# Refresh Google reviews (needs Places API key + Place ID)
+# Optional: refresh Vagaro via headless browser
+set GOOGLE_PLACES_API_KEY=...
+set GOOGLE_PLACE_ID=...
+set VAGARO_SYNC=1
+npm run sync:reviews
+```
+
+Notes:
+- Google Places returns ~5 newest reviews officially.
+- Vagaro has no public reviews API; sync parses their public listing with Playwright when `VAGARO_SYNC=1`.
+- Redeploy after sync so Hostinger staging/production gets the updated JSON.
+
 ## Scripts
 
 - `npm run dev` — Vite dev server
+- `npm run sync:reviews` — refresh Google/Vagaro review feed
 - `npm run build` — production build
 - `npm run preview` — preview production build
 - `npm run lint` — oxlint
