@@ -104,7 +104,7 @@ export function ContactForm() {
         </p>
         <button
           type="button"
-          className="mt-6 text-sm text-blush-deep underline-offset-4 hover:underline"
+          className="mt-6 text-sm text-olive underline-offset-4 hover:underline"
           onClick={() => setStatus("idle")}
         >
           Send another message
@@ -154,26 +154,29 @@ export function ContactForm() {
       <label className="block">
         <span className="mb-1.5 block text-sm text-ink-soft">Service interest</span>
         <select
-          className="w-full rounded-sm border border-line bg-paper px-3 py-2.5 text-sm text-ink outline-none focus:border-blush"
+          className="w-full rounded-full border border-line bg-paper px-3 py-2.5 text-sm text-ink outline-none focus:border-olive"
           value={form.serviceInterest}
           onChange={(e) => update("serviceInterest", e.target.value)}
         >
           <option value="">Not sure yet</option>
-          <option value="classic-lashes">Classic Lashes</option>
-          <option value="hybrid-lashes">Hybrid Lashes</option>
-          <option value="volume-lashes">Volume Lashes</option>
-          <option value="lash-lifts">Lash Lift & Tint</option>
+          <option value="eyelash-extensions">Eyelash Extensions</option>
+          <option value="eyelash-lifts">Eyelash Lifts</option>
+          <option value="eyelash-tinting">Eyelash Tinting</option>
+          <option value="eyebrow-tinting">Eyebrow Tinting</option>
+          <option value="waxing">Waxing</option>
+          <option value="facial">Facial</option>
+          <option value="other">Other / question</option>
         </select>
       </label>
 
       <label className="block">
         <span className="mb-1.5 block text-sm text-ink-soft">Message</span>
         <textarea
-          className="min-h-28 w-full rounded-sm border border-line bg-paper px-3 py-2.5 text-sm text-ink outline-none focus:border-blush"
+          className="min-h-28 w-full rounded-2xl border border-line bg-paper px-3 py-2.5 text-sm text-ink outline-none focus:border-olive"
           value={form.message}
           onChange={(e) => update("message", e.target.value)}
         />
-        {errors.message ? <span className="mt-1 block text-xs text-blush-deep">{errors.message}</span> : null}
+        {errors.message ? <span className="mt-1 block text-xs text-olive-deep">{errors.message}</span> : null}
       </label>
 
       {/* Honeypot — leave empty */}
@@ -191,12 +194,12 @@ export function ContactForm() {
 
       <TurnstileWidget onToken={onToken} />
 
-      {errorMessage ? <p className="text-sm text-blush-deep">{errorMessage}</p> : null}
+      {errorMessage ? <p className="text-sm text-olive-deep">{errorMessage}</p> : null}
 
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="rounded-sm bg-ink px-5 py-3 text-sm font-medium text-paper transition-opacity disabled:opacity-60"
+        className="btn-primary disabled:opacity-60"
       >
         {status === "submitting" ? "Sending…" : "Send request"}
       </button>
@@ -220,11 +223,11 @@ function Field({ label, value, onChange, error, type = "text", autoComplete }: F
       <input
         type={type}
         autoComplete={autoComplete}
-        className="w-full rounded-sm border border-line bg-paper px-3 py-2.5 text-sm text-ink outline-none focus:border-blush"
+        className="w-full rounded-full border border-line bg-paper px-3 py-2.5 text-sm text-ink outline-none focus:border-olive"
         value={value}
         onChange={(e) => onChange(e.target.value)}
       />
-      {error ? <span className="mt-1 block text-xs text-blush-deep">{error}</span> : null}
+      {error ? <span className="mt-1 block text-xs text-olive-deep">{error}</span> : null}
     </label>
   );
 }

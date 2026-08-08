@@ -1,40 +1,98 @@
-import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
+import { BookingBanner, FaqList, PageShell } from "@/components/Page";
 import { ContactForm } from "@/components/ContactForm";
-import { faqs } from "@/data/faqs";
-import { services } from "@/data/services";
-
-function PageShell({
-  title,
-  intro,
-  children,
-}: {
-  title: string;
-  intro: string;
-  children: ReactNode;
-}) {
-  return (
-    <div className="mx-auto max-w-6xl px-5 py-16 md:px-8 md:py-20">
-      <h1 className="font-display text-4xl text-ink md:text-5xl">{title}</h1>
-      <p className="mt-4 max-w-2xl text-base text-muted">{intro}</p>
-      <div className="mt-12">{children}</div>
-    </div>
-  );
-}
+import { getServiceBySlug, servicePages, site } from "@/data/site";
+import { testimonials } from "@/data/testimonials";
 
 export function Services() {
   return (
     <PageShell
+      eyebrow="Menu"
       title="Services"
-      intro="Placeholder menu. We’ll replace titles, descriptions, and pricing from your final content."
+      intro="Eyelash extensions, lifts, tinting, brows, waxing, and facials — priced clearly so you know what to expect."
     >
-      <div className="grid gap-8">
-        {services.map((service) => (
-          <article key={service.slug} className="border-b border-line pb-8">
-            <h2 className="font-display text-3xl text-ink">{service.title}</h2>
-            <p className="mt-3 max-w-2xl text-muted">{service.shortDescription}</p>
+      <div className="grid gap-5 md:grid-cols-2">
+        {servicePages.map((service) => (
+          <article key={service.slug} className="rounded-3xl border border-line bg-cream p-6">
+            <h2 className="font-display text-2xl text-ink">{service.title}</h2>
+            <p className="mt-3 text-sm leading-relaxed text-muted">{service.shortDescription}</p>
+            <Link to={`/${service.slug}`} className="mt-5 inline-flex text-sm font-semibold text-olive">
+              Learn more →
+            </Link>
           </article>
         ))}
+      </div>
+      <div className="mt-14">
+        <BookingBanner />
+      </div>
+    </PageShell>
+  );
+}
+
+export function ServiceDetail({ slug }: { slug: string }) {
+  const service = getServiceBySlug(slug);
+
+  if (!service) {
+    return (
+      <PageShell title="Service not found" intro="That service page doesn’t exist.">
+        <Link to="/services" className="text-sm font-semibold text-olive">
+          Back to services
+        </Link>
+      </PageShell>
+    );
+  }
+
+  return (
+    <PageShell eyebrow="Service" title={service.title} intro={service.intro}>
+      <div className="space-y-10">
+        {service.sections.map((section) => (
+          <section key={section.heading ?? "items"}>
+            {section.heading ? (
+              <h2 className="font-display text-2xl text-ink md:text-3xl">{section.heading}</h2>
+            ) : null}
+            <ul className={section.heading ? "mt-5 space-y-4" : "space-y-4"}>
+              {section.items.map((item) => (
+                <li
+                  key={item.name}
+                  className="flex flex-col gap-1 border-b border-line pb-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6"
+                >
+                  <div>
+                    <p className="font-medium text-ink">{item.name}</p>
+                    {item.note ? (
+                      <p className="mt-1 max-w-2xl text-sm leading-relaxed text-muted">{item.note}</p>
+                    ) : null}
+                  </div>
+                  <p className="shrink-0 font-display text-xl text-olive">{item.price}</p>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+
+        {service.careTips?.length ? (
+          <section>
+            <h2 className="font-display text-2xl text-ink">Aftercare tips</h2>
+            <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-muted">
+              {service.careTips.map((tip) => (
+                <li key={tip}>{tip}</li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
+
+        {service.faqs?.length ? (
+          <section>
+            <h2 className="font-display text-2xl text-ink">FAQs</h2>
+            <div className="mt-5">
+              <FaqList faqs={service.faqs} />
+            </div>
+          </section>
+        ) : null}
+
+        <BookingBanner
+          title={`Book ${service.navLabel.toLowerCase()}`}
+          body="Appointments are scheduled through Vagaro. Prefer a question first? Use the contact form."
+        />
       </div>
     </PageShell>
   );
@@ -43,28 +101,97 @@ export function Services() {
 export function About() {
   return (
     <PageShell
-      title="About"
-      intro="Studio story goes here — founder intro, values, and the Salt Lash City point of view."
+      eyebrow="About"
+      title="About Blake"
+      intro="Master Esthetician. NIMA graduate. Founder of Salt Lash City in Sandy, UT."
     >
-      <p className="max-w-2xl text-base leading-relaxed text-ink-soft">
-        Design and photography will drive this page. For now this route exists so navigation, SEO
-        scaffolding, and layout remain stable while content is finalized.
-      </p>
+      <div className="grid gap-10 md:grid-cols-[1.2fr_0.8fr]">
+        <div className="space-y-5 text-base leading-relaxed text-ink-soft">
+          <p>
+            I became a Master Esthetician after studying full-time for 9 months at the National
+            Institute of Medical Aesthetics (NIMA). I graduated in July 2017 after completing their
+            1,200-hour Master Aesthetics program.
+          </p>
+          <p>
+            I use Lashbomb for all of my lash extension material because of their synthetic mink —
+            rather than authentic mink hair.
+          </p>
+          <p>
+            I started this career hoping to help others feel more comfortable in their own skin by
+            enhancing their natural beauty with little to no maintenance.
+          </p>
+          <div>
+            <h2 className="font-display text-2xl text-ink">Certified in</h2>
+            <ul className="mt-3 grid gap-2 text-sm text-muted sm:grid-cols-2">
+              {[
+                "Lash lifting and tinting",
+                "Classic, hybrid, and volume lash extensions",
+                "Speed waxing",
+                "Permanent cosmetics",
+                "Microblading",
+                "Microneedling",
+              ].map((item) => (
+                <li key={item} className="rounded-full border border-line bg-cream px-4 py-2">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <aside className="rounded-3xl border border-line bg-cream p-6">
+          <p className="font-display text-2xl text-ink">Visit the studio</p>
+          <p className="mt-3 text-sm leading-relaxed text-muted">
+            {site.address.line1}
+            <br />
+            {site.address.line2}
+          </p>
+          <p className="mt-4 text-sm">
+            <a href={site.phoneHref} className="font-semibold text-olive">
+              {site.phone}
+            </a>
+          </p>
+          <p className="mt-2 text-sm">
+            <a href={`mailto:${site.email}`} className="font-semibold text-olive">
+              {site.email}
+            </a>
+          </p>
+          <a
+            href={site.bookingUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="btn-primary mt-6"
+          >
+            Schedule an Appointment
+          </a>
+        </aside>
+      </div>
     </PageShell>
   );
 }
 
-export function Gallery() {
+export function Testimonials() {
   return (
-    <PageShell title="Gallery" intro="Lookbook grid will live here. Drop in approved photos when ready.">
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <div
-            key={i}
-            className="aspect-[4/5] rounded-sm bg-paper-deep"
-            aria-label={`Gallery placeholder ${i + 1}`}
-          />
+    <PageShell
+      eyebrow="Love notes"
+      title="Client Testimonials"
+      intro="What guests say about lashes, brows, and the studio vibe at Salt Lash City."
+    >
+      <div className="grid gap-5 md:grid-cols-2">
+        {testimonials.map((t) => (
+          <blockquote key={t.name} className="rounded-3xl border border-line bg-cream p-6">
+            <p className="text-sm leading-relaxed text-ink-soft">“{t.quote}”</p>
+            <footer className="mt-5 flex items-center gap-3">
+              {t.image ? (
+                <img src={t.image} alt="" className="h-12 w-12 rounded-full object-cover" />
+              ) : null}
+              <cite className="not-italic font-semibold text-ink">{t.name}</cite>
+            </footer>
+          </blockquote>
         ))}
+      </div>
+      <div className="mt-14">
+        <BookingBanner />
       </div>
     </PageShell>
   );
@@ -73,53 +200,61 @@ export function Gallery() {
 export function Contact() {
   return (
     <PageShell
-      title="Contact"
-      intro="Tell us what you’re looking for and we’ll follow up about availability."
+      eyebrow="Contact"
+      title="Get in touch"
+      intro="Book online anytime, or send a note about services, fills, or first-visit questions."
     >
-      <div className="relative max-w-xl">
-        <ContactForm />
+      <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr]">
+        <div className="space-y-6">
+          <div className="rounded-3xl border border-line bg-cream p-6">
+            <p className="font-display text-2xl text-ink">Studio</p>
+            <p className="mt-3 text-sm leading-relaxed text-muted">
+              {site.address.line1}
+              <br />
+              {site.address.line2}
+            </p>
+            <p className="mt-4 text-sm">
+              <a href={site.phoneHref} className="font-semibold text-olive">
+                {site.phone}
+              </a>
+            </p>
+            <p className="mt-2 text-sm">
+              <a href={`mailto:${site.email}`} className="font-semibold text-olive">
+                {site.email}
+              </a>
+            </p>
+            <a
+              href={site.bookingUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="btn-primary mt-6"
+            >
+              Schedule on Vagaro
+            </a>
+          </div>
+          <div className="rounded-3xl border border-line bg-cream p-6">
+            <p className="font-display text-2xl text-ink">Hours</p>
+            <ul className="mt-4 space-y-2 text-sm text-ink-soft">
+              {site.hours.map((row) => (
+                <li key={row.day} className="flex justify-between gap-4">
+                  <span>{row.day}</span>
+                  <span>{row.time}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="relative rounded-3xl border border-line bg-cream p-6 md:p-8">
+          <h2 className="font-display text-2xl text-ink">Send a message</h2>
+          <p className="mt-2 text-sm text-muted">
+            Prefer email first? This form notifies Blake and stores your request securely.
+          </p>
+          <div className="mt-6">
+            <ContactForm />
+          </div>
+        </div>
       </div>
-    </PageShell>
-  );
-}
-
-export function FAQs() {
-  return (
-    <PageShell title="FAQs" intro="Common questions — replace with salon-approved answers.">
-      <div className="max-w-2xl space-y-6">
-        {faqs.map((faq) => (
-          <details key={faq.question} className="group border-b border-line pb-4">
-            <summary className="cursor-pointer list-none font-medium text-ink marker:content-none">
-              <span className="flex items-start justify-between gap-4">
-                {faq.question}
-                <span className="text-muted transition-transform group-open:rotate-45">+</span>
-              </span>
-            </summary>
-            <p className="mt-3 text-sm leading-relaxed text-muted">{faq.answer}</p>
-          </details>
-        ))}
-      </div>
-    </PageShell>
-  );
-}
-
-export function Privacy() {
-  return (
-    <PageShell title="Privacy Policy" intro="Placeholder legal page.">
-      <p className="max-w-2xl text-sm leading-relaxed text-muted">
-        Draft privacy policy will be added before launch. This route is reserved so footer links and
-        sitemap stay consistent.
-      </p>
-    </PageShell>
-  );
-}
-
-export function Terms() {
-  return (
-    <PageShell title="Terms of Use" intro="Placeholder legal page.">
-      <p className="max-w-2xl text-sm leading-relaxed text-muted">
-        Draft terms will be added before launch.
-      </p>
     </PageShell>
   );
 }
@@ -127,7 +262,7 @@ export function Terms() {
 export function NotFound() {
   return (
     <PageShell title="Page not found" intro="That page doesn’t exist (yet).">
-      <Link to="/" className="text-sm text-blush-deep underline-offset-4 hover:underline">
+      <Link to="/" className="text-sm font-semibold text-olive">
         Back home
       </Link>
     </PageShell>
