@@ -12,15 +12,23 @@ export function Services() {
       intro="Eyelash extensions, lifts, tinting, brows, waxing, and facials — priced clearly so you know what to expect."
     >
       <div className="grid gap-5 md:grid-cols-2">
-        {servicePages.map((service) => (
-          <article key={service.slug} className="rounded-3xl border border-line bg-cream p-6">
-            <h2 className="font-display text-2xl text-ink">{service.title}</h2>
-            <p className="mt-3 text-sm leading-relaxed text-muted">{service.shortDescription}</p>
-            <Link to={`/${service.slug}`} className="mt-5 inline-flex text-sm font-semibold text-olive">
-              Learn more →
-            </Link>
-          </article>
-        ))}
+        {servicePages.map((service, index) => {
+          const pastel = ["bg-pink-soft", "bg-sage-soft", "bg-sky-soft"][index % 3];
+          return (
+            <article
+              key={service.slug}
+              className={`rounded-2xl ${pastel} p-6 shadow-[0_8px_24px_rgb(54_54_54/0.06)]`}
+            >
+              <h2 className="text-2xl font-bold text-ink">{service.title}</h2>
+              <p className="mt-3 text-sm leading-relaxed text-ink-soft">
+                {service.shortDescription}
+              </p>
+              <Link to={`/${service.slug}`} className="btn-pink mt-5">
+                Learn More
+              </Link>
+            </article>
+          );
+        })}
       </div>
       <div className="mt-14">
         <BookingBanner />
@@ -35,7 +43,7 @@ export function ServiceDetail({ slug }: { slug: string }) {
   if (!service) {
     return (
       <PageShell title="Service not found" intro="That service page doesn’t exist.">
-        <Link to="/services" className="text-sm font-semibold text-olive">
+        <Link to="/services" className="text-sm font-semibold text-leaf">
           Back to services
         </Link>
       </PageShell>
@@ -48,7 +56,7 @@ export function ServiceDetail({ slug }: { slug: string }) {
         {service.sections.map((section) => (
           <section key={section.heading ?? "items"}>
             {section.heading ? (
-              <h2 className="font-display text-2xl text-ink md:text-3xl">{section.heading}</h2>
+              <h2 className="font-bold text-2xl text-ink md:text-3xl">{section.heading}</h2>
             ) : null}
             <ul className={section.heading ? "mt-5 space-y-4" : "space-y-4"}>
               {section.items.map((item) => (
@@ -62,7 +70,7 @@ export function ServiceDetail({ slug }: { slug: string }) {
                       <p className="mt-1 max-w-2xl text-sm leading-relaxed text-muted">{item.note}</p>
                     ) : null}
                   </div>
-                  <p className="shrink-0 font-display text-xl text-olive">{item.price}</p>
+                  <p className="shrink-0 font-bold text-xl text-leaf">{item.price}</p>
                 </li>
               ))}
             </ul>
@@ -71,7 +79,7 @@ export function ServiceDetail({ slug }: { slug: string }) {
 
         {service.careTips?.length ? (
           <section>
-            <h2 className="font-display text-2xl text-ink">Aftercare tips</h2>
+            <h2 className="font-bold text-2xl text-ink">Aftercare tips</h2>
             <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-muted">
               {service.careTips.map((tip) => (
                 <li key={tip}>{tip}</li>
@@ -82,7 +90,7 @@ export function ServiceDetail({ slug }: { slug: string }) {
 
         {service.faqs?.length ? (
           <section>
-            <h2 className="font-display text-2xl text-ink">FAQs</h2>
+            <h2 className="font-bold text-2xl text-ink">FAQs</h2>
             <div className="mt-5">
               <FaqList faqs={service.faqs} />
             </div>
@@ -121,7 +129,7 @@ export function About() {
             enhancing their natural beauty with little to no maintenance.
           </p>
           <div>
-            <h2 className="font-display text-2xl text-ink">Certified in</h2>
+            <h2 className="font-bold text-2xl text-ink">Certified in</h2>
             <ul className="mt-3 grid gap-2 text-sm text-muted sm:grid-cols-2">
               {[
                 "Lash lifting and tinting",
@@ -140,19 +148,19 @@ export function About() {
         </div>
 
         <aside className="rounded-3xl border border-line bg-cream p-6">
-          <p className="font-display text-2xl text-ink">Visit the studio</p>
+          <p className="font-bold text-2xl text-ink">Visit the studio</p>
           <p className="mt-3 text-sm leading-relaxed text-muted">
             {site.address.line1}
             <br />
             {site.address.line2}
           </p>
           <p className="mt-4 text-sm">
-            <a href={site.phoneHref} className="font-semibold text-olive">
+            <a href={site.phoneHref} className="font-semibold text-leaf">
               {site.phone}
             </a>
           </p>
           <p className="mt-2 text-sm">
-            <a href={`mailto:${site.email}`} className="font-semibold text-olive">
+            <a href={`mailto:${site.email}`} className="font-semibold text-leaf">
               {site.email}
             </a>
           </p>
@@ -160,7 +168,7 @@ export function About() {
             href={site.bookingUrl}
             target="_blank"
             rel="noreferrer"
-            className="btn-primary mt-6"
+            className="btn-mustard mt-6"
           >
             Schedule an Appointment
           </a>
@@ -207,19 +215,19 @@ export function Contact() {
       <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr]">
         <div className="space-y-6">
           <div className="rounded-3xl border border-line bg-cream p-6">
-            <p className="font-display text-2xl text-ink">Studio</p>
+            <p className="font-bold text-2xl text-ink">Studio</p>
             <p className="mt-3 text-sm leading-relaxed text-muted">
               {site.address.line1}
               <br />
               {site.address.line2}
             </p>
             <p className="mt-4 text-sm">
-              <a href={site.phoneHref} className="font-semibold text-olive">
+              <a href={site.phoneHref} className="font-semibold text-leaf">
                 {site.phone}
               </a>
             </p>
             <p className="mt-2 text-sm">
-              <a href={`mailto:${site.email}`} className="font-semibold text-olive">
+              <a href={`mailto:${site.email}`} className="font-semibold text-leaf">
                 {site.email}
               </a>
             </p>
@@ -227,13 +235,13 @@ export function Contact() {
               href={site.bookingUrl}
               target="_blank"
               rel="noreferrer"
-              className="btn-primary mt-6"
+              className="btn-mustard mt-6"
             >
               Schedule on Vagaro
             </a>
           </div>
           <div className="rounded-3xl border border-line bg-cream p-6">
-            <p className="font-display text-2xl text-ink">Hours</p>
+            <p className="font-bold text-2xl text-ink">Hours</p>
             <ul className="mt-4 space-y-2 text-sm text-ink-soft">
               {site.hours.map((row) => (
                 <li key={row.day} className="flex justify-between gap-4">
@@ -246,7 +254,7 @@ export function Contact() {
         </div>
 
         <div className="relative rounded-3xl border border-line bg-cream p-6 md:p-8">
-          <h2 className="font-display text-2xl text-ink">Send a message</h2>
+          <h2 className="font-bold text-2xl text-ink">Send a message</h2>
           <p className="mt-2 text-sm text-muted">
             Prefer email first? This form notifies Blake and stores your request securely.
           </p>
@@ -262,7 +270,7 @@ export function Contact() {
 export function NotFound() {
   return (
     <PageShell title="Page not found" intro="That page doesn’t exist (yet).">
-      <Link to="/" className="text-sm font-semibold text-olive">
+      <Link to="/" className="text-sm font-semibold text-leaf">
         Back home
       </Link>
     </PageShell>
