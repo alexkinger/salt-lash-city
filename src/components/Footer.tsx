@@ -1,7 +1,8 @@
 import { NavLink } from "react-router-dom";
-import { site } from "@/data/site";
+import { useCms } from "@/hooks/CmsProvider";
 
 export function Footer() {
+  const { site } = useCms();
   return (
     <footer className="mt-auto bg-cream">
       <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-3 md:px-8">

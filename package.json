@@ -6,14 +6,17 @@
   "scripts": {
     "dev": "vite",
     "sync:reviews": "node scripts/sync-reviews.mjs",
+    "gbp:auth": "node scripts/gbp-auth.mjs",
+    "firebase:seed": "node scripts/firebase-seed.mjs",
+    "firebase:set-admin": "node scripts/set-admin-claim.mjs",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.112.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "firebase": "^12.17.1",
     "lucide-react": "^1.30.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
@@ -29,7 +32,10 @@
     "@types/react-dom": "^19.2.3",
     "@vercel/node": "^5.9.6",
     "@vitejs/plugin-react": "^6.0.4",
+    "firebase-admin": "^14.2.0",
+    "firebase-tools": "^15.26.0",
     "oxlint": "^1.75.0",
+    "playwright": "^1.62.1",
     "tailwindcss": "^4.3.3",
     "typescript": "~6.0.2",
     "vite": "^8.2.0"

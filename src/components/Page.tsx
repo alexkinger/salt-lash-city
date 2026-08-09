@@ -1,20 +1,54 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { site } from "@/data/site";
+import { Seo } from "@/components/Seo";
+import { useCms } from "@/hooks/CmsProvider";
+import { buildWebPageGraph, getDefaultMeta } from "@/lib/schema";
 
 export function PageShell({
   title,
   intro,
   children,
   eyebrow,
+  path,
+  description,
+  jsonLd,
+  noIndex,
 }: {
   title: string;
   intro?: string;
   eyebrow?: string;
   children: ReactNode;
+  path?: string;
+  description?: string;
+  jsonLd?: Record<string, unknown> | Array<Record<string, unknown>>;
+  noIndex?: boolean;
 }) {
+  const { site } = useCms();
+  const defaultMeta = getDefaultMeta(site);
+  const metaDescription = description || intro || defaultMeta.description;
+  const pageJsonLd =
+    jsonLd ||
+    (path
+      ? buildWebPageGraph({
+          name: title,
+          description: metaDescription,
+          path,
+          crumbs: [
+            { name: "Home", path: "/" },
+            { name: title, path },
+          ],
+        })
+      : undefined);
+
   return (
     <div className="mx-auto max-w-6xl px-5 py-14 md:px-8 md:py-20">
+      <Seo
+        title={title}
+        description={metaDescription}
+        path={path}
+        jsonLd={pageJsonLd}
+        noIndex={noIndex}
+      />
       {eyebrow ? <p className="font-script text-xl text-leaf md:text-2xl">{eyebrow}</p> : null}
       <h1 className="mt-2 text-4xl font-bold text-ink md:text-5xl">{title}</h1>
       {intro ? <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-ink-soft">{intro}</p> : null}
@@ -30,6 +64,7 @@ export function BookingBanner({
   title?: string;
   body?: string;
 }) {
+  const { site } = useCms();
   return (
     <section className="border border-line bg-cream px-6 py-8 md:px-10 md:py-10">
       <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">

@@ -1,6 +1,7 @@
 import { useCallback, useState, type FormEvent } from "react";
 import { z } from "zod";
 import { TurnstileWidget } from "@/components/TurnstileWidget";
+import { getContactFunctionUrl } from "@/lib/firebase";
 
 const formSchema = z.object({
   firstName: z.string().trim().min(1, "First name is required"),
@@ -67,7 +68,7 @@ export function ContactForm() {
     setStatus("submitting");
 
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch(getContactFunctionUrl(), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

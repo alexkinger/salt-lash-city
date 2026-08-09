@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-import { servicePages, site } from "@/data/site";
+import { useCms } from "@/hooks/CmsProvider";
 
 const topLinks = [
   { to: "/about", label: "About" },
@@ -10,6 +10,7 @@ const topLinks = [
 ];
 
 export function Header() {
+  const { site, services } = useCms();
   const [open, setOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
 
@@ -43,7 +44,7 @@ export function Header() {
             </NavLink>
             <div className="invisible absolute left-0 top-full z-50 w-60 pt-3 opacity-0 transition group-hover:visible group-hover:opacity-100">
               <div className="border border-line bg-paper p-2 shadow-md">
-                {servicePages.map((service) => (
+                {services.map((service) => (
                   <NavLink
                     key={service.slug}
                     to={`/${service.slug}`}
@@ -100,7 +101,7 @@ export function Header() {
               </button>
               {servicesOpen ? (
                 <ul className="mb-2 ml-3 border-l border-line pl-3">
-                  {servicePages.map((service) => (
+                  {services.map((service) => (
                     <li key={service.slug}>
                       <NavLink
                         to={`/${service.slug}`}

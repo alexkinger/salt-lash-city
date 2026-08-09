@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { ReviewsWidget } from "@/components/ReviewsWidget";
-import { site } from "@/data/site";
+import { Seo } from "@/components/Seo";
+import { useCms } from "@/hooks/CmsProvider";
+import { buildWebPageGraph, getDefaultMeta } from "@/lib/schema";
 
 const serviceCards = [
   {
     title: "Extensions & Lifts",
     href: "/eyelash-extensions",
-    image: "/images/brand/lash-tools.png",
+    image: "/images/brand/extensions-lifts.png",
     bg: "bg-pink-soft",
   },
   {
@@ -49,15 +51,28 @@ function Sparkle({ className }: { className?: string }) {
 }
 
 export function Home() {
+  const { site } = useCms();
+  const defaultMeta = getDefaultMeta(site);
+  const heroSrc = site.heroImagePath || "/images/brand/lash-extensions-home.png";
   return (
     <div>
+      <Seo
+        title={defaultMeta.title}
+        description={defaultMeta.description}
+        path="/"
+        jsonLd={buildWebPageGraph({
+          name: defaultMeta.title,
+          description: defaultMeta.description,
+          path: "/",
+        })}
+      />
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-5 py-14 md:grid-cols-[1.05fr_0.95fr] md:px-8 md:py-20">
           <div>
             <p className="font-script text-2xl text-ink md:text-[1.65rem]">Welcome to</p>
             <h1 className="mt-1 text-5xl font-bold tracking-tight text-ink md:text-6xl">
-              Salt Lash City
+              {site.name}
             </h1>
             <p className="mt-4 text-lg font-medium text-ink">
               <span aria-hidden="true">👁️ </span>
@@ -77,8 +92,8 @@ export function Home() {
             <div className="blob-teal absolute inset-[8%] rounded-[42%_58%_55%_45%/48%_42%_58%_52%] opacity-80" />
             <div className="absolute inset-[14%] overflow-hidden rounded-[48%_52%_45%_55%/55%_45%_55%_45%] bg-cream shadow-sm">
               <img
-                src="/images/brand/hero-eye.png"
-                alt="Lash application close-up"
+                src={heroSrc}
+                alt="Lash extensions"
                 className="h-full w-full object-cover"
               />
             </div>
@@ -219,7 +234,11 @@ export function Home() {
       </section>
 
       {/* Reviews */}
-      <ReviewsWidget limit={6} title="Reviews" />
+      <ReviewsWidget
+        title="Reviews"
+        scrollHeight="sm"
+        showTestimonialsLink
+      />
 
       {/* CTA */}
       <section className="py-16 md:py-20">

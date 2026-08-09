@@ -2,17 +2,21 @@ import { Link } from "react-router-dom";
 import { BookingBanner, FaqList, PageShell } from "@/components/Page";
 import { ContactForm } from "@/components/ContactForm";
 import { ReviewsWidget } from "@/components/ReviewsWidget";
-import { getServiceBySlug, servicePages, site } from "@/data/site";
+import { useCms } from "@/hooks/CmsProvider";
+import { buildServiceGraph, buildWebPageGraph } from "@/lib/schema";
 
 export function Services() {
+  const { services } = useCms();
   return (
     <PageShell
       eyebrow="Menu"
       title="Services"
+      path="/services"
       intro="Eyelash extensions, lifts, tinting, brows, waxing, and facials — priced clearly so you know what to expect."
+      description="Browse Salt Lash City services in Sandy, UT: eyelash extensions, lifts, tinting, eyebrow tinting, waxing, and facials."
     >
       <div className="grid gap-5 md:grid-cols-2">
-        {servicePages.map((service, index) => {
+        {services.map((service, index) => {
           const pastel = ["bg-pink-soft", "bg-sage-soft", "bg-sky-soft"][index % 3];
           return (
             <article
@@ -38,11 +42,25 @@ export function Services() {
 }
 
 export function ServiceDetail({ slug }: { slug: string }) {
-  const service = getServiceBySlug(slug);
+  const { services, loading } = useCms();
+  const service = services.find((s) => s.slug === slug) || null;
+
+  if (loading && !service) {
+    return (
+      <PageShell title="Loading…" path="/services">
+        <p className="text-sm text-muted">Loading service…</p>
+      </PageShell>
+    );
+  }
 
   if (!service) {
     return (
-      <PageShell title="Service not found" intro="That service page doesn’t exist.">
+      <PageShell
+        title="Service not found"
+        intro="That service page doesn’t exist."
+        path="/services"
+        noIndex
+      >
         <Link to="/services" className="text-sm font-semibold text-leaf">
           Back to services
         </Link>
@@ -51,7 +69,14 @@ export function ServiceDetail({ slug }: { slug: string }) {
   }
 
   return (
-    <PageShell eyebrow="Service" title={service.title} intro={service.intro}>
+    <PageShell
+      eyebrow="Service"
+      title={service.title}
+      intro={service.intro}
+      path={`/${service.slug}`}
+      description={service.shortDescription}
+      jsonLd={buildServiceGraph(service)}
+    >
       <div className="space-y-10">
         {service.sections.map((section) => (
           <section key={section.heading ?? "items"}>
@@ -107,11 +132,24 @@ export function ServiceDetail({ slug }: { slug: string }) {
 }
 
 export function About() {
+  const { site } = useCms();
   return (
     <PageShell
       eyebrow="About"
       title="About Blake"
+      path="/about"
       intro="Master Esthetician. NIMA graduate. Founder of Salt Lash City in Sandy, UT."
+      description="Meet Blake, Master Esthetician and founder of Salt Lash City in Sandy, UT — NIMA graduate offering lashes, waxing, and facials."
+      jsonLd={buildWebPageGraph({
+        name: "About Blake",
+        description:
+          "Meet Blake, Master Esthetician and founder of Salt Lash City in Sandy, UT.",
+        path: "/about",
+        crumbs: [
+          { name: "Home", path: "/" },
+          { name: "About", path: "/about" },
+        ],
+      })}
     >
       <div className="grid gap-10 md:grid-cols-[1.2fr_0.8fr]">
         <div className="space-y-5 text-base leading-relaxed text-ink-soft">
@@ -183,9 +221,16 @@ export function Testimonials() {
     <PageShell
       eyebrow="Love notes"
       title="Client Reviews"
+      path="/testimonials"
       intro="Google and Vagaro reviews, synced into the site so guests (and search engines) can read them."
+      description="Read Google and Vagaro client reviews for Salt Lash City in Sandy, UT."
     >
-      <ReviewsWidget limit={24} showHeader={false} compact title="Client Reviews" />
+      <ReviewsWidget
+        showHeader={false}
+        compact
+        scrollHeight="lg"
+        title="Client Reviews"
+      />
       <div className="mt-14">
         <BookingBanner />
       </div>
@@ -194,11 +239,24 @@ export function Testimonials() {
 }
 
 export function Contact() {
+  const { site } = useCms();
   return (
     <PageShell
       eyebrow="Contact"
       title="Get in touch"
+      path="/contact"
       intro="Book online anytime, or send a note about services, fills, or first-visit questions."
+      description="Contact Salt Lash City in Sandy, UT or book an appointment online through Vagaro."
+      jsonLd={buildWebPageGraph({
+        name: "Contact Salt Lash City",
+        description:
+          "Contact Salt Lash City in Sandy, UT or book an appointment online through Vagaro.",
+        path: "/contact",
+        crumbs: [
+          { name: "Home", path: "/" },
+          { name: "Contact", path: "/contact" },
+        ],
+      })}
     >
       <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr]">
         <div className="space-y-6">
@@ -257,7 +315,7 @@ export function Contact() {
 
 export function NotFound() {
   return (
-    <PageShell title="Page not found" intro="That page doesn’t exist (yet).">
+    <PageShell title="Page not found" intro="That page doesn’t exist (yet)." path="/" noIndex>
       <Link to="/" className="text-sm font-semibold text-leaf">
         Back home
       </Link>
