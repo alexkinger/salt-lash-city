@@ -33,3 +33,6 @@ functions/.env
 functions/.env.*
 !functions/.env.example
 
+
+# SOPS-encrypted env files are safe to commit
+!.env*.enc

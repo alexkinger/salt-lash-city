@@ -1,0 +1,9 @@
+creation_rules:
+  - path_regex: \.env.*\.enc$
+    input_type: dotenv
+    output_type: dotenv
+    age: age1xgqaadq2py8zcg9s5hws6s5ysstjgf4ylvl5kfh9r6vdea2cjujq743tzt
+  - path_regex: memory\.enc$
+    input_type: binary
+    output_type: binary
+    age: age1xgqaadq2py8zcg9s5hws6s5ysstjgf4ylvl5kfh9r6vdea2cjujq743tzt
