@@ -1,0 +1,3 @@
+
+# SOPS payloads must survive checkout byte-for-byte or the MAC fails
+*.enc -text -diff
